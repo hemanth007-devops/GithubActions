@@ -1,0 +1,51 @@
+name: SonarQube Scan
+ 
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+ 
+jobs:
+  sonarqube:
+    runs-on: ubuntu-latest
+ 
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+ 
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+ 
+      - name: Cache SonarQube packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+ 
+      - name: Install SonarQube Scanner
+        run: |
+          curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-linux.zip
+          unzip sonar-scanner.zip
+          mv sonar-scanner-4.6.2.2472-linux sonar-scanner
+          echo "SONAR_SCANNER_HOME=$(pwd)/sonar-scanner" >> $GITHUB_ENV
+          echo "$(pwd)/sonar-scanner/bin" >> $GITHUB_PATH
+ 
+      - name: Run SonarQube Scan
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.SONAR_GITHUB }}
+        run: |
+          sonar-scanner \
+            -Dsonar.projectKey=VISI-DEVOPS \
+            -Dsonar.host.url=http://44.211.52.158:9000 \
+            -Dsonar.login=$SONAR_TOKEN \
+            -Dsonar.scm.provider=git \
+            -Dsonar.pullrequest.provider=GitHub \
+            -Dsonar.pullrequest.github.repository=$GITHUB_REPOSITORY \
+            -Dsonar.pullrequest.github.token.secured=$GITHUB_TOKEN
