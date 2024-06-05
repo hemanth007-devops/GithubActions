@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - ReleaseJiraID
-      - 'releases/**'
+      - 'Release*'
   pull_request:
     branches:
       - main
