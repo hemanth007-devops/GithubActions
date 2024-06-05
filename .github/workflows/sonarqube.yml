@@ -3,7 +3,8 @@ name: SonarQube Scan
 on:
   push:
     branches:
-      - main
+      - ReleaseJiraID
+      - 'releases/**'
   pull_request:
     branches:
       - main
