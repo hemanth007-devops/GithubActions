@@ -1,8 +1,8 @@
 import pandas as pd
 
 # Define the input and output file paths
-input_file = 'input_data.csv'
-output_file = 'output_data.csv'
+input_file = 'ETL-Project/Input_Data.csv'
+output_file = 'ETL-Project/Output_Data.csv'
 
 def extract_data(file_path):
     """Extract data from a CSV file."""
