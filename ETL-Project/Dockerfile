@@ -5,7 +5,8 @@ FROM python:3.8-slim
 WORKDIR /app
 
 # Copy the requirements.txt file and install any dependencies
-COPY ETL-Project/requirements.txt ./requirements.txt
+COPY /absolute/path/to/ETL-Project/requirements.txt ./requirements.txt
+
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the ETL script
