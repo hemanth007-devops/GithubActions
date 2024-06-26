@@ -9,13 +9,11 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
-      - docker build -t 730335363558.dkr.ecr.us-east-1.amazonaws.com/nyl-dev-repo1:latest .
+      - docker build -t 730335363558.dkr.ecr.us-east-1.amazonaws.com/nyl-dev-repo1:latest -f ETL-Project/Dockerfile ETL-Project
+      - docker push 730335363558.dkr.ecr.us-east-1.amazonaws.com/nyl-dev-repo1:latest
   post_build:
     commands:
       - echo Build completed on `date`
-      - echo Pushing the Docker image...
-      - docker push 730335363558.dkr.ecr.us-east-1.amazonaws.com/nyl-dev-repo1:latest
-      - echo Docker image pushed to ECR.
 artifacts:
   files:
     - '**/*'
