@@ -8,7 +8,7 @@ WORKDIR /
 RUN pip install boto3
 
 # Copy Lambda handler script
-COPY lambda_handler.py .
+COPY lambda_function.py .
 
 # Command to run Lambda handler function
 CMD ["lambda_handler.lambda_handler"]
