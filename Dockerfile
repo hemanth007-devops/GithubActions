@@ -12,3 +12,5 @@ COPY lambda_function.py .
 
 # Command to run Lambda handler function
 CMD ["lambda_handler.lambda_handler"]
+
+#success
