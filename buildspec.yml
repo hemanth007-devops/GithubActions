@@ -1,0 +1,43 @@
+version: 0.2
+
+env:
+  variables:
+    S3_BUCKET: "nyl-actdatmart-glue-artifact" # Update with your S3 bucket name
+    FOLDERS: "config bookmarks scripts jobs" # List of folders to copy
+
+phases:
+  install:
+    commands:
+      - echo Installing dependencies...
+      - pip install awscli
+
+  pre_build:
+    commands:
+      - echo Pre-build phase...
+      - aws --version
+
+  build:
+    commands:
+      - echo Build phase...
+      - for folder in $FOLDERS; do
+          if [ -d "$folder" ]; then
+            echo "Uploading $folder to s3://$S3_BUCKET/$folder";
+            aws s3 sync $folder s3://$S3_BUCKET/$folder;
+          else
+            echo "$folder does not exist, skipping";
+          fi
+        done
+
+  post_build:
+    commands:
+      - echo Post-build phase...
+
+artifacts:
+  files:
+    - '**/*'
+  discard-paths: no
+  base-directory: .
+
+cache:
+  paths:
+    - '**/*'
