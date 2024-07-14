@@ -2,7 +2,7 @@ version: 0.2
 
 env:
   variables:
-    S3_BUCKET: "nyl-actdatmart-glue-artifact" # Update with your S3 bucket name
+    S3_BUCKET: "bronzebucket" # Update with your S3 bucket name
     FOLDERS: "config bookmarks scripts jobs" # List of folders to copy
 
 phases:
