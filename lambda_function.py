@@ -1,9 +1,12 @@
+import os
 import boto3
 
 def lambda_handler(event, context):
     glue = boto3.client('glue')
-    workflow_name = 'your_glue_workflow_name'  # Replace with your actual Glue workflow name
-
+    
+    # Get Glue workflow name from environment variable
+    workflow_name = os.environ['GLUE_WORKFLOW_NAME']
+    
     try:
         response = glue.start_workflow_run(Name=workflow_name)
         workflow_run_id = response['RunId']
